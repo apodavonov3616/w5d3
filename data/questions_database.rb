@@ -80,7 +80,7 @@ class Question
 
   # Hard
   def self.most_followed(n)
-
+    Follow.most_followed_questions(n)
   end
 
   def likers
