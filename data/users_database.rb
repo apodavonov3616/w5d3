@@ -45,7 +45,15 @@ class User
         data = QuestionsDatabase.instance.execute(<<-SQL, object_id) 
           SELECT * FROM users WHERE id = ? 
         SQL
-        raise "#{object_id} not in database" unless data.first['id']
+        raise "#{object_id} not in database" if data.empty?
+        User.new(data.first)
+      end
+
+      def self.find_by_name(f_name, l_name)
+        data = QuestionsDatabase.instance.execute(<<-SQL, f_name, l_name) 
+          SELECT * FROM users WHERE first_name LIKE ? AND last_name LIKE ? 
+        SQL
+        raise "#{f_name} not in database" if data.empty?
         User.new(data.first)
       end
     end

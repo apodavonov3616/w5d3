@@ -44,9 +44,11 @@ class Reply
       end
     
       def self.find_by_id(object_id)
-        raise "#{self} not in database" unless self.id
-        data = QuestionsDatabase.instance.execute("SELECT * FROM replies WHERE id LIKE #{object_id}")
-        User.new(data)
+          data = QuestionsDatabase.instance.execute(<<-SQL, object_id) 
+            SELECT * FROM replies WHERE id = ? 
+          SQL
+          raise "#{object_id} not in database" if data.empty?
+          Reply.new(data.first)
       end
 end
     

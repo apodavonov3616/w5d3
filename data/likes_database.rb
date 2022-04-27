@@ -45,16 +45,8 @@ class Like
         data = QuestionsDatabase.instance.execute(<<-SQL, object_id) 
           SELECT * FROM question_likes WHERE id = ? 
         SQL
-        raise "#{object_id} not in database" unless data.first['id']
+        raise "#{object_id} not in database" if data.empty?
         Like.new(data.first)
       end
 end
 
-l = Like.new(
-      {
-            'user_id' => 2,
-            'question_id' => 4
-      }
-)
-p l.create
-p Like.all

@@ -54,7 +54,7 @@ class Question
     data = QuestionsDatabase.instance.execute(<<-SQL, object_id) 
           SELECT * FROM questions WHERE id = ? 
     SQL
-    raise "#{object_id} not in database" unless data.first['id']
+    raise "#{object_id} not in database" if data.empty?
     Question.new(data.first)
   end
 end

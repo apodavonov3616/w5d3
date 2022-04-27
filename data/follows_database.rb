@@ -45,7 +45,7 @@ class Follow
         data = QuestionsDatabase.instance.execute(<<-SQL, object_id) 
           SELECT * FROM question_follows WHERE id = ? 
         SQL
-        raise "#{object_id} not in database" unless data.first['id']
+        raise "#{object_id} not in database" if data.empty?
         Follow.new(data.first)
       end
     end
