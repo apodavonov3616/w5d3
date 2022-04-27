@@ -49,7 +49,18 @@ class Follow
 
       # Medium
       def self.followers_for_question_id(question_id)
-
+        data = QuestionsDatabase.instance.execute(<<-SQL, question_id) 
+          SELECT
+            * 
+          FROM 
+            question_follows 
+          JOIN users
+          ON user_id = users.id
+          WHERE 
+            question_id = ?
+        SQL
+        raise "not in database" if data.empty?
+        data.map { |datum| User.new(datum) }
       end
 
       def self.followed_questions_for_user_id(user_id)

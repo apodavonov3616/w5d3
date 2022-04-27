@@ -67,19 +67,23 @@ class Reply
       end
 
       def author 
-
+        User.find_by_id(author_id)
       end
 
       def question 
-
+        Question.find_by_id(question_id)
       end
 
       def parent_reply 
-
+        Reply.find_by_id(parent_reply)
       end
 
       def child_replies
-
+        data = QuestionsDatabase.instance.execute(<<-SQL, id) 
+                  SELECT * FROM replies WHERE parent_reply = ? 
+            SQL
+        raise "not found" if data.empty?
+        data.map { |datum| Reply.new(datum) }
       end
 end
 
