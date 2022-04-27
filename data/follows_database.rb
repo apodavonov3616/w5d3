@@ -46,4 +46,18 @@ class Follow
         raise "#{object_id} not in database" if data.empty?
         Follow.new(data.first)
       end
+
+      # Medium
+      def self.followers_for_question_id(question_id)
+
+      end
+
+      def self.followed_questions_for_user_id(user_id)
+
+      end
+
+      # Hard
+      def self.most_followed_questions(n)
+        
+      end
     end

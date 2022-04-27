@@ -57,6 +57,47 @@ class Question
     raise "#{object_id} not in database" if data.empty?
     Question.new(data.first)
   end
+
+  # Easy
+  def self.find_by_author_id(auth_id)
+
+  end
+
+
+  def author 
+
+  end
+
+
+  def replies
+
+  end
+
+
+
+  # Medium
+  def followers 
+
+  end
+
+
+
+  # Hard
+  def self.most_followed(n)
+
+  end
+
+  def likers
+
+  end
+  
+  def num_likes
+
+  end
+
+  def self.most_liked(n)
+    
+  end
 end
 
 

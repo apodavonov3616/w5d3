@@ -54,5 +54,31 @@ class User
         raise "#{f_name} not in database" if data.empty?
         User.new(data.first)
       end
+
+      # Easy
+      def authored_questions 
+
+      end
+
+      def authored_replies 
+
+      end
+
+
+      # Medium
+      def followed_questions
+
+      end
+
+
+      # Hard
+      def liked_questions
+
+      end
+
+
+      def average_karma
+        
+      end
     end
 
