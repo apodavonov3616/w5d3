@@ -41,7 +41,7 @@ class Follow
     
       def self.find_by_id(object_id)
         data = QuestionsDatabase.instance.execute(<<-SQL, object_id) 
-          SELECT * FROM question_follows WHERE id = ? 
+          SELECT * FROM question_follows WHERE follows_id = ? 
         SQL
         raise "#{object_id} not in database" if data.empty?
         Follow.new(data.first)
@@ -63,12 +63,23 @@ class Follow
         data.map { |datum| User.new(datum) }
       end
 
-      def self.followed_questions_for_user_id(user_id)
-
+      def self.followed_questions_for_user_id(user_id_for_questions)
+        data = QuestionsDatabase.instance.execute(<<-SQL, user_id_for_questions) 
+          SELECT
+            *
+          FROM 
+            question_follows 
+          JOIN questions
+          ON question_id = questions.id
+          WHERE 
+            user_id = ?
+        SQL
+        raise "not in database" if data.empty?
+        data.map { |datum| Question.new(datum) }
       end
 
       # Hard
       def self.most_followed_questions(n)
-        
+
       end
     end

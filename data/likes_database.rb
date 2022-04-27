@@ -41,7 +41,7 @@ class Like
     
       def self.find_by_id(object_id)
         data = QuestionsDatabase.instance.execute(<<-SQL, object_id) 
-          SELECT * FROM question_likes WHERE id = ? 
+          SELECT * FROM question_likes WHERE likes_id = ? 
         SQL
         raise "#{object_id} not in database" if data.empty?
         Like.new(data.first)

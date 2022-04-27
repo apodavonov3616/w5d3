@@ -67,7 +67,7 @@ class User
 
       # Medium
       def followed_questions
-
+        Follow.followed_questions_for_user_id(id)
       end
 
 

@@ -1,5 +1,7 @@
-require "sqlite3"
-require_relative "dummy"
+require 'sqlite3'
+require 'singleton'
+require 'pry'
+
 
 
 class Question
@@ -58,8 +60,8 @@ class Question
   end
 
 
-  def author
-    User.find_by_id(@author_id)
+  def author 
+    User.find_by_id(author_id)
   end
 
 
@@ -71,7 +73,7 @@ class Question
 
   # Medium
   def followers 
-
+    Follow.followers_for_question_id(id)
   end
 
 
