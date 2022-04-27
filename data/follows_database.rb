@@ -1,5 +1,5 @@
 require 'sqlite3'
-require_relative 'dummy'
+
 
    
 class Follow
@@ -89,9 +89,8 @@ class Follow
           ORDER BY COUNT(*) DESC
           LIMIT ?
         SQL
+
         raise "not in database" if data.empty?
         data.map { |datum| Question.new(datum) }
       end
     end
-
-    Follow.followers_for_question_id(1)

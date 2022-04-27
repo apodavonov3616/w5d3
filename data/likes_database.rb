@@ -1,5 +1,5 @@
 require 'sqlite3'
-require_relative 'dummy'
+
 
    
 class Like

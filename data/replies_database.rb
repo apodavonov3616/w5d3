@@ -1,5 +1,5 @@
 require 'sqlite3'
-require_relative 'dummy'
+
 
    
 class Reply 
@@ -86,4 +86,5 @@ class Reply
         data.map { |datum| Reply.new(datum) }
       end
 end
+
 
