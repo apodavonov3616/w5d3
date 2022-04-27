@@ -1,0 +1,5 @@
+require_relative "likes_database"
+require_relative "questions_database"
+require_relative "replies_database"
+require_relative "users_database"
+require_relative "follows_database"

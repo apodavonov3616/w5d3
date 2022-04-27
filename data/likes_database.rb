@@ -1,7 +1,5 @@
 require 'sqlite3'
-require 'singleton'
-require 'pry'
-require_relative 'questions_database'
+require_relative 'dummy'
 
    
 class Like
