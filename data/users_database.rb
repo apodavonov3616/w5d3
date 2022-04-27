@@ -73,12 +73,27 @@ class User
 
       # Hard
       def liked_questions
-
+        Like.liked_questions_for_user_id(id)
       end
 
 
       def average_karma
-
+        data = QuestionsDatabase.get_first_value(<<-SQL, self.id)
+          SELECT CAST(COUNT(question_likes.id) AS FLOAT)) / COUNT(DISTINCT questions.id) AS karma
+          FROM questions
+          LEFT OUTER JOIN question_likes
+          ON question.id = question_likes.question_id
+          WHERE questions.author_id = ?
+        SQL
+        
       end
+
     end
+
+    # questions = authored_questions 
+    #     total_likes = 0
+    #     questions.each do |question|
+    #       total_likes += question.num_likes
+    #     end
+    #     total_likes * 1.0 / questions.length
 

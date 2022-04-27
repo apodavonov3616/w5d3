@@ -18,5 +18,15 @@ class QuestionsDatabase < SQLite3::Database
       self.type_translation = true
       self.results_as_hash = true
     end
+
+    def self.get_first_value(*arg)
+        instance.get_first_value(*arg)
+    end
   end
 
+
+u = User.find_by_id(2)
+p u.average_karma
+
+puts "---"
+# puts Like.num_likes_for_question_id(1)

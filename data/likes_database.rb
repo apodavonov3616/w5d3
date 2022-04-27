@@ -50,19 +50,62 @@ class Like
 
       # Hard
       def self.likers_for_question_id(question_id)
-
+          data = QuestionsDatabase.instance.execute(<<-SQL, question_id) 
+            SELECT
+              * 
+            FROM 
+              question_likes 
+            JOIN users
+            ON user_id = users.id
+            WHERE 
+              question_id = ?
+          SQL
+          raise "not in database" if data.empty?
+          data.map { |datum| User.new(datum) }
       end
 
       def self.num_likes_for_question_id(question_id)
-
+        data = QuestionsDatabase.instance.execute(<<-SQL, question_id) 
+        SELECT
+          COUNT(*) AS num_like
+        FROM 
+          question_likes 
+        JOIN users
+        ON user_id = users.id
+        WHERE 
+          question_id = ?
+      SQL
+      data.first["num_like"]
       end
 
       def self.liked_questions_for_user_id(user_id)
-
+        data = QuestionsDatabase.instance.execute(<<-SQL, user_id) 
+          SELECT
+            *
+          FROM 
+            question_likes
+          JOIN questions
+          ON question_id = questions.id
+          WHERE 
+            user_id = ?
+        SQL
+        raise "not in database" if data.empty?
+        data.map { |datum| Question.new(datum) }
       end
 
       def self.most_liked_questions(n)
+        data = QuestionsDatabase.instance.execute(<<-SQL, n) 
+          SELECT *
+          FROM question_likes 
+          JOIN questions
+          ON question_id = questions.id
+          GROUP BY question_id
+          ORDER BY COUNT(*) DESC
+          LIMIT ?
+        SQL
 
+        raise "not in database" if data.empty?
+        data.map { |datum| Question.new(datum) }
       end
 
 end

@@ -84,15 +84,15 @@ class Question
   end
 
   def likers
-
+    Like.likers_for_question_id(id)
   end
   
   def num_likes
-
+    Like.num_likes_for_question_id(id)
   end
 
   def self.most_liked(n)
-
+    Like.most_liked_questions(n)
   end
 end
 
