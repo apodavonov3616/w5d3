@@ -50,9 +50,14 @@ class Question
     SQL
   end
 
-  def find_by_id(object_id)
-    raise "#{self} not in database" unless self.id
-    data = QuestionsDatabase.instance.execute("SELECT * FROM questions WHERE id LIKE #{object_id}")
-    Question.new(data)
+  def self.find_by_id(object_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, object_id) 
+          SELECT * FROM questions WHERE id = ? 
+    SQL
+    raise "#{object_id} not in database" unless data.first['id']
+    Question.new(data.first)
   end
 end
+
+
+
