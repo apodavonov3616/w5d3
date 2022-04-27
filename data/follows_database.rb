@@ -80,6 +80,18 @@ class Follow
 
       # Hard
       def self.most_followed_questions(n)
-
+        data = QuestionsDatabase.instance.execute(<<-SQL, n) 
+          SELECT *
+          FROM question_follows 
+          JOIN questions
+          ON question_id = questions.id
+          GROUP BY question_id
+          ORDER BY COUNT(*) DESC
+          LIMIT ?
+        SQL
+        raise "not in database" if data.empty?
+        data.map { |datum| Question.new(datum) }
       end
     end
+
+    Follow.followers_for_question_id(1)
