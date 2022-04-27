@@ -59,8 +59,12 @@ class Question
   end
 
   # Easy
-  def self.find_by_author_id(auth_id)
-
+  def self.find_by_author_id(author_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, author_id)
+      SELECT * FROM questions WHERE author_id = ?
+    SQL
+    raise "#{author_id} not in database" if data.empty?
+    data.map { |datum| Question.new(datum) }
   end
 
 
@@ -96,9 +100,7 @@ class Question
   end
 
   def self.most_liked(n)
-    
+
   end
 end
-
-
 

@@ -48,5 +48,38 @@ class Reply
           raise "#{object_id} not in database" if data.empty?
           Reply.new(data.first)
       end
+      
+      # Easy
+      def self.find_by_user_id(user_id)
+            data = QuestionsDatabase.instance.execute(<<-SQL, user_id) 
+                  SELECT * FROM replies WHERE author_id = ? 
+            SQL
+            raise "#{user_id} not in database" if data.empty?
+            data.map { |datum| Reply.new(datum)}
+      end
+
+      def self.find_by_question_id(question_id)
+            data = QuestionsDatabase.instance.execute(<<-SQL, question_id) 
+                  SELECT * FROM replies WHERE question_id = ? 
+            SQL
+            raise "#{question_id} not in database" if data.empty?
+            data.map { |datum| Reply.new(datum)}
+      end
+
+      def author 
+
+      end
+
+      def question 
+
+      end
+
+      def parent_reply 
+
+      end
+
+      def child_replies
+
+      end
 end
-    
+
